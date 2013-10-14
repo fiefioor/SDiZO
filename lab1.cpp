@@ -41,15 +41,26 @@ void Sortowanie(struktura** tab, int _n)
 	int n = _n;
 	    for(int i=0; i<n-1; i++)
 		{
-
 			for(int j=0; j<n-1; j++)
 			{
-			 if(tab[j+1] < tab[j])
+				if(tab[j+1]->int1 < tab[j]->int1)
                 swap(tab[j+1], tab[j]);
 			}
 	}
 
 
+}
+
+int zliczanie_znakow(struktura** tab, int _n, char _h)
+{
+	char h = _h;
+	int n = _n;
+	int licznik=0;
+	for(int i=0; i<n; i++)
+	{
+		if(tab[i]->char1==h) licznik++;
+	}
+	return licznik;
 }
 
 
@@ -59,4 +70,5 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	system("pause");
 }
+
 
