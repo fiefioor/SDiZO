@@ -51,7 +51,7 @@ void Sortowanie(struktura** tab, int _n)
 
 }
 
-int zliczanie_znakow(struktura** tab, int _n, char _h)
+int Zliczanie_znakow(struktura** tab, int _n, char _h)
 {
 	char h = _h;
 	int n = _n;
@@ -66,9 +66,14 @@ int zliczanie_znakow(struktura** tab, int _n, char _h)
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-
+	//start1
+	struktura** pomiar1;
+	pomiar1=Losowanie(1000);
+	Sortowanie(pomiar1,1000);
+	Zliczanie_znakow(pomiar1,1000,'A');
+	Kasowanie(pomiar1,1000);
+	//stop1
 
 	system("pause");
 }
-
 
