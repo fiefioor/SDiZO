@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include <iostream>
 
+using namespace std;
 
 //*****************************NODE**********************************
 class Node
@@ -88,20 +89,19 @@ class Tree
 {
 private:
 	Node* root;
+	void setRoot(Node*); 
 public:
 	Tree();
 	~Tree();
-	void setRoot(Node*); 
 	Node* getRoot();
 	void add(int);
 	void addRandom(int);
 	void remove(int);
 	void search(int);
-	void display();
+	void display(Node*);
 };
 
 Tree::~Tree(){;}
-
 
 Tree::Tree()
 {
@@ -116,14 +116,55 @@ void Tree::setRoot(Node* _root)
 Node* Tree::getRoot()
 {
 	return(root);
-}
+} 
 
 void Tree::add(int key)
 {
-	if(getRoot==NULL)
+	Node* nju = new Node(key);
+	if(getRoot()==NULL)
 	{
-		Node* nju = new Node(key);
 		setRoot(nju);
+	}
+	else
+	{
+		Node* i = root;
+		while (i!=NULL)
+		{
+			if(nju->getKey() < i->getKey())
+			{
+				if(i->getLeft() == NULL)
+				{
+					i->setLeft(nju);
+					nju->setParent(i);
+				}
+				else
+				i=i->getLeft();
+			}
+			else if(nju->getKey() > i->getKey())
+			{
+				if(i->getRight() == NULL)
+				{
+					i->setRight(nju);
+					nju->setParent(i);
+				}
+
+				i=i->getRight();
+			}
+			else if(nju->getKey() == i->getKey())
+			{
+				cout << "Taki element istnieje" << endl;
+			}
+		}
+	}
+}
+
+void Tree::display(Node* _root)
+{
+	if(_root!=NULL)
+	{
+		display(_root->getLeft());
+		cout << " " << _root->getKey() << " ";
+		display(_root->getRight());
 	}
 
 }
@@ -132,7 +173,12 @@ void Tree::add(int key)
 //*****************************main**********************************
 int _tmain(int argc, _TCHAR* argv[])
 {
+	Tree tree1;
+	tree1.add(10);
+	tree1.add(11);
+//	tree1.add(9);
+	tree1.display(tree1.getRoot());
+
 	system("pause");
 	return 0;
 }
-
