@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include <iostream>
+#include <time.h>
 
 using namespace std;
 
@@ -342,24 +343,44 @@ void Tree::sucDel(Node* rem)
 {
 	Node* suc = new Node();
 	suc = successor(rem);
-	if (suc->sons()==1)
+	if (suc->getRight()!=NULL)
 	{
+		if(suc==rem->getRight())
+		{
+			suc->getParent()->setRight(suc->getRight());
+			suc->getRight()->setParent(suc->getParent());
+		}
+		else
+		{
 		suc->getParent()->setLeft(suc->getRight());
 		suc->getRight()->setParent(suc->getParent());
+		}
 	}
 	rem->setKey(suc->getKey());
+	if(rem->getRight()==suc) rem->setRight(NULL);
+
 	delete suc;
 }
 void Tree::predDel(Node* rem)
 {
 	Node* pred = new Node();
 	pred = predecessor(rem);
-	if (pred->sons()==1)
+	if (pred->getLeft()!=NULL)
 	{
+		if(pred==rem->getLeft())
+		{
+		pred->getParent()->setLeft(pred->getLeft());
+		pred->getLeft()->setParent(pred->getParent());
+		}
+		else
+		{
 		pred->getParent()->setRight(pred->getLeft());
 		pred->getLeft()->setParent(pred->getParent());
+		}
+
 	}
 	rem->setKey(pred->getKey());
+	if(rem->getLeft()==pred) rem->setLeft(NULL);
 	delete pred;
 
 }
@@ -431,11 +452,24 @@ void Tree::removeNode(int _key)
 
 }
 
+void Tree::addRandom(int quant)
+{
+	for(int i=0;i<quant;i++)
+	{
+		add((rand() % 100000 << 16)+rand() % 100000);
+	}
+
+}
+
+
 //*****************************main**********************************
 int _tmain(int argc, _TCHAR* argv[])
 {
+	int a;
+	srand(time(NULL));
+	
 	Tree* tree1 = new Tree();
-	tree1->add(20);
+/*  tree1->add(20);
 	tree1->add(30);
 	tree1->add(10);
 	//tree1->add(15);
@@ -453,8 +487,22 @@ int _tmain(int argc, _TCHAR* argv[])
 	cout << endl;
 	cout << tree1->predecessor(tree1->search(20))->getKey() << endl;
 	tree1->removeNode(9);
-//	tree1->removeNode(30);
+	tree1->removeNode(30);
 	tree1->display();
+	*/
+
+	tree1->addRandom(100);
+	tree1->display();
+	cout<< endl<< endl;
+	
+	cout << endl;
+	cout << "Usun: ";
+	cin >> a ;
+
+	tree1->removeNode(a);
+	
+	tree1->display();
+	cout<< endl<< endl;
 
 	cout << endl;
 	system("pause");
