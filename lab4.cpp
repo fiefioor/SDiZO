@@ -530,7 +530,41 @@ void Tree::rotationRight(Node* A)
 	}
 }
 
+void Tree::rotationLeft(Node* A)
+{
+	Node* B = new Node();
+	Node* p = new Node();
 
+	B=A->getRight();
+	p=A->getParent();
+
+	if(B!=NULL)
+	{
+		A->setRight(B->getLeft());
+		if(A->getRight!=NULL)
+		{
+			A->getRight()->setParent(A);
+		}
+		B->setLeft(A);
+		B->setParent(p);
+		A->setParent(B);
+
+		if(p!=NULL)
+		{
+			if(p->getLeft()==A)
+			{
+				p->setLeft(B);
+			}
+			else
+			{
+				p->setRight(B);
+			}
+
+		}
+		else setRoot(B);
+	}
+
+}
 
 //*****************************main**********************************
 int _tmain(int argc, _TCHAR* argv[])
