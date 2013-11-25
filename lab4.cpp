@@ -497,11 +497,37 @@ void Tree::addRandom(int quant)
 
 void Tree::rotationRight(Node* A)
 {
-	if(A->getParent()!=NULL)
+	Node* B = new Node();
+	Node* p = new Node();
+	p=A->getParent();
+	B=A->getLeft();
+
+	if(B!=NULL)
 	{
-
+		A->setLeft(B->getRight());
+		if(A->getLeft()!=NULL)
+		{
+			A->getLeft()->setParent(A);
+		}
+		B->setParent(p);	
+		B->setRight(A);
+		A->setParent(B);
 	}
-
+	if(p!=NULL)
+	{
+		if(p->getLeft()==A)
+		{
+			p->setLeft(B);
+		}
+		else
+		{
+			p->setRight(B);
+		}
+	}
+	else
+	{
+		setRoot(B);
+	}
 }
 
 
