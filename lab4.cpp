@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include <iostream>
 #include <time.h>
+#include <math.h>
 
 using namespace std;
 
@@ -136,9 +137,12 @@ public:
 
 	void removeNode(int);
 	void DSW();
-	void rotation();
+	void rotation();	
 void rotationLeft(Node*);
 	void rotationRight(Node*);
+
+	int rightChilds();
+	int leftChilds();
 
 };
 
@@ -626,18 +630,48 @@ int Tree::log2(int x)
 {
 	int y=1;
 
-	while( x > 0 ) 
+	/*while( x > 0 ) 
 	{
 		x=(x>>1);
 		y =(y<<1);
 	}
-	return(y);
+	return(y);*/
+
+	while((x >>= 1) > 0) y <<= 1;
+
+  return y;
+
 }
+
+int Tree::rightChilds()
+{
+	 Node* tmp = getRoot();
+     int i=0;
+     while (tmp)
+	 {
+		 tmp=tmp->getRight();
+		 i++;
+     }
+     return(i);
+}
+
+int Tree::leftChilds()
+{
+	 Node* tmp = getRoot();
+     int i=0;
+     while (tmp)
+	 {
+		 tmp=tmp->getLeft();
+		 i++;
+     }
+     return(i);
+}
+
 
 void Tree::DSW()
 {
-	int n=0;
-	int s=0;
+	int n=0; //licznik wierszy
+	int s=0; //licznik obrotow
 	int o=0;
 	Node* p = new Node();
 	p=getRoot();
@@ -660,6 +694,9 @@ void Tree::DSW()
 	}
 	s=n+1-log2(n+1);
 	p=getRoot();
+//	cout << n << endl;
+//	cout << log2(n+1) << endl;
+//	cout << s << endl;
 	for(int i = 0; i < s; i++)
 	{
 		rotationLeft(p);
@@ -686,7 +723,7 @@ void Tree::DSW()
 		}
 	}
 
-	
+
 }
 
 //*****************************main**********************************
@@ -695,113 +732,23 @@ int _tmain(int argc, _TCHAR* argv[])
 	int a;
 	srand(time(NULL));
 	
-/*	Tree* tree1 = new Tree();
-    tree1->add(20);
-	tree1->add(30);
-	tree1->add(10);
-	//tree1->add(15);
-	tree1->add(25);
-	tree1->add(15);
-	tree1->add(tree1->max()->getKey()+1);
-	tree1->add(tree1->min()->getKey()-1);
-	tree1->add(22);
-	tree1->add(23);
-	tree1->display();
-	cout << endl;
-	tree1->search(11);
-	cout << endl;
-	cout << tree1->successor(tree1->search(31))->getKey();
-	cout << endl;
-	cout << tree1->predecessor(tree1->search(20))->getKey() << endl;
-	//tree1->removeNode(9);
-	//tree1->removeNode(30);
-	tree1->display();
-	cout << endl<<endl;
-	cout << tree1->getRoot()->getKey();
+	Tree* tree1 = new Tree();
+    tree1->addRandom(1000);
+	//tree1->display();
+	cout << tree1->elementnum() << endl;
 	tree1->DSW();
-	//tree1->rotationLeft(tree1->search(20));
-	//tree1->rotationLeft(tree1->search(23));
-
-	cout << endl<<endl;
-	cout << tree1->getRoot()->getKey();
-	cout << endl<<endl;
-
-	tree1->display();
+	cout << tree1->elementnum()<< endl;
+	//tree1->display();
+	cout << tree1-> rightChilds() << endl;
+	cout << tree1-> leftChilds() << endl;
 
 
-	*/
 
-	/*	cout << "Usun: ";
-	cin >> a ;
 
-	tree1->removeNode(a);
-	*/
-//	tree1->display();
+
 
 	cout<< endl<< endl;
 
-	Tree* tree2 = new Tree();
-
-	tree2->add(9);
-	tree2->add(5);
-	tree2->add(7);
-	tree2->add(15);
-	tree2->add(10);
-	tree2->add(18);
-	tree2->add(19);
-
-	cout << endl;
-	tree2->display();
-	cout << tree2->getRoot()->getKey()<<endl;
-	tree2->DSW();
-
-	cout << tree2->getRoot()->getKey();
-
-
-	cout << endl;
-
-
-
-	Tree* tree3 = new Tree();
-
-/*	tree3->add(9);
-	tree3->add(15);
-	tree3->add(5);
-	tree3->add(7);
-	tree3->add(10);
-	tree3->add(18);
-	tree3->add(19);
-
-	tree3->rotationRight(tree3->search(9));
-
-	cout << tree3->search(9)->getParent()->getKey()<<endl;
-	cout << tree3->search(9)->getLeft()->getKey()<<endl;
-	cout << tree3->search(9)->getRight()->getKey()<<endl;
-
-	tree3->rotationRight(tree3->search(9));
-
-	cout << tree3->search(9)->getParent()->getKey()<<endl;
-	cout << tree3->search(9)->getLeft()<<endl;
-	cout << tree3->search(9)->getRight()->getKey()<<endl;
-	
-	tree3->rotationRight(tree3->search(15));
-
-	cout << tree3->search(9)->getRight()<<endl;
-	cout << tree3->search(7)->getParent()->getKey()<<endl;
-	tree3->rotationLeft(tree3->search(5));
-
-	cout << tree3->search(7)->getParent()<<endl;
-	cout << tree3->search(7)->getLeft()<<endl;
-	cout << tree3->search(7)->getRight()<<endl;
-	tree3->rotationLeft(tree3->search(9));
-	tree3->rotationLeft(tree3->search(15));
-	tree3->rotationLeft(tree3->search(7));
-	cout << tree3->getRoot()->getKey()<<endl;;
-	cout << tree3->search(18)->getParent()->getKey()<<endl;
-	cout << tree3->search(18)->getLeft()->getKey()<<endl;
-	cout << tree3->search(18)->getRight()->getKey()<<endl;
-
-*/
 	system("pause");
 	return 0;
 }
